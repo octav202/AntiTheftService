@@ -9,10 +9,16 @@
 	Frameworks/base/services/java/com/android/server/SystemServer.java
 		- add AntiTheftService to ServiceManager.
 	
-		        // Add AntiTheftService to ServiceManager.
+        // Add AntiTheftService to ServiceManager.
         try {
-            Slog.i(TAG, "Test Service");
+            Slog.i(TAG, "Added AT_Service");
             ServiceManager.addService(ANTI_THEFT_SERVICE_CLASS, new AntiTheftService(context));
         } catch (Throwable e) {
             Slog.e(TAG, "Failure starting AntiTheftService", e);
         }
+
+    system/sepolicy/service.te
+        - add type antitheft_service, system_api_service, system_server_service, service_manager_type;
+
+    system/sepolicy/service_contexts
+        - antitheft                                 u:object_r:antitheft_service:s0
